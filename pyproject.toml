@@ -1,0 +1,89 @@
+[tool.poetry]
+name = "libreflow"
+version = "0.0.1"
+license = "BSD-3-Clause"
+authors = ["Shaun S"]
+description = "Analyse Freestyle Libre CGM export data"
+homepage = "https://github.com/shaunrs/libreflow"
+repository = "https://github.com/shaunrs/libreflow"
+readme = "README.md"
+keywords = [
+]
+
+classifiers = [
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^2.2.3"
+argparse = "^1.4.0"
+
+[tool.poetry.dev-dependencies]
+black = "^21.7b0"
+isort = "^5.9.3"
+flake8 = "^3.9.2"
+pyproject-flake8 = "^0.0.1-alpha.2"
+flake8-black = "^0.2.3"
+flake8-isort = "^4.0.0"
+flake8-bugbear = "^21.4.3"
+flake8-bandit = "^2.1.2"
+coverage = {extras = ["toml"], version = "^5.5"}
+
+[build-system]
+requires = [
+    "poetry-core>=1.0.0",
+]
+
+build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+max-line-length = 140
+
+# Ignore line-too-long, and use BugBear's B9 fuzzy line length checking instead
+ignore = "E501"
+
+# B = BugBear
+# B9 = BugBear Extended
+# BLK = Black formatter error
+# I = iSort import ordering error
+# S = Bandit (S)ecurity notices
+# C,E,F,W = Flake8
+select = "B,B9,BLK,I,S,C,E,F,W"
+
+# Bandit marks `assert` as being unsafe, but it is fine to ignore in tests
+per-file-ignores = [
+    "tests/*:S101",
+]
+
+exclude = [
+    "__init__.py",
+]
+
+[tool.isort]
+profile = "black"
+skip = [
+    "__init__.py",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["hookup"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 95
+
+exclude_lines = [
+    "pragma: no cover",
+    "def __str__",
+    "if __name__ == .__main__.:"
+]
+
+[tool.pytest.ini_options]
+required_plugins = ["pytest-cov"]
+log_cli = true
+testpaths = [
+    "tests",
+]
+
+addopts = "--cov --cov-report=xml"
